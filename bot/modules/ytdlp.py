@@ -20,7 +20,7 @@ from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.listeners.tasks_listener import MirrorLeechListener
 from bot.helper.ext_utils.help_messages import YT_HELP_MESSAGE
 from bot.helper.ext_utils.bulk_links import extract_bulk_links
-from bot.helper.ext_utils.aeon_utils import nsfw_precheck
+from bot.helper.aeon_utils.nsfw_check import nsfw_precheck
 
 
 @new_task
@@ -373,7 +373,7 @@ async def _ytdl(client, message, isLeech=False, sameDir=None, bulk=[]):
     if error_msg:
         final_msg = f'Hey, <b>{tag}</b>!\n'
         for __i, __msg in enumerate(error_msg, 1):
-            final_msg += f'\n<b>{__i}</b>: {__msg}\n'
+            final_msg += f'\n<blockquote><b>{__i}</b>: {__msg}</blockquote>'
         if error_button is not None:
             error_button = error_button.build_menu(2)
         await delete_links(message)
@@ -420,7 +420,7 @@ async def _ytdl(client, message, isLeech=False, sameDir=None, bulk=[]):
             await delete_links(message)
             return
 
-    listener = MirrorLeechListener(message, compress, isLeech=isLeech, tag=tag, sameDir=sameDir, rcFlags=rcf, upPath=up, drive_id=drive_id, index_link=index_link, isYtdlp=True, leech_utils={'screenshots': sshots, 'thumb': thumb})
+    listener = MirrorLeechListener(message, compress, isLeech=isLeech, tag=tag, sameDir=sameDir, rcFlags=rcf, upPath=up, drive_id=drive_id, index_link=index_link, isYtdlp=True, files_utils={'screenshots': sshots, 'thumb': thumb})
 
     if 'mdisk.me' in link:
         name, link = await _mdisk(link, name)

@@ -21,7 +21,7 @@ from bot.helper.mirror_utils.rclone_utils.transfer import RcloneTransferHelper
 from bot.helper.ext_utils.help_messages import CLONE_HELP_MESSAGE
 from bot.helper.mirror_utils.status_utils.rclone_status import RcloneStatus
 from bot.helper.listeners.tasks_listener import MirrorLeechListener
-from bot.helper.ext_utils.aeon_utils import nsfw_precheck
+from bot.helper.aeon_utils.nsfw_check import nsfw_precheck
 
 
 async def rcloneNode(client, message, link, dst_path, rcf, tag):
@@ -230,7 +230,7 @@ async def clone(client, message):
     if error_msg:
         final_msg = f'Hey, <b>{tag}</b>!\n'
         for __i, __msg in enumerate(error_msg, 1):
-            final_msg += f'\n<b>{__i}</b>: {__msg}\n'
+            final_msg += f'\n<blockquote><b>{__i}</b>: {__msg}</blockquote>'
         if error_button is not None:
             error_button = error_button.build_menu(2)
         await delete_links(message)
